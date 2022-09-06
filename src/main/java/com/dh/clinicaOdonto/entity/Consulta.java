@@ -23,7 +23,10 @@ import java.util.Date;
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToOne(cascade = CascadeType.ALL)
     private Dentista dentista;
+
+    @OneToOne(cascade = CascadeType.ALL)
     private Paciente paciente;
     private Date data_consulta;
 

@@ -25,7 +25,7 @@ public class ConsultaDTO {
     private String infosConsulta;
 
     public ConsultaDTO (Consulta consulta){
-        infosConsulta = consulta.getPacienteId()+", sua consulta está marcada para " + consulta.getData_consulta() + "com o dentista " +consulta.getDentistaId();
+        infosConsulta = consulta.getPaciente().getNome()+", sua consulta está marcada para " + consulta.getData_consulta() + "com o dentista " +consulta.getDentista().getNome();
     }
 
 

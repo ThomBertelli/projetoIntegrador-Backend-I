@@ -1,6 +1,7 @@
 package com.dh.clinicaOdonto.service;
 
 
+import com.dh.clinicaOdonto.dto.PacienteDTO;
 import com.dh.clinicaOdonto.entity.Paciente;
 import com.dh.clinicaOdonto.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;

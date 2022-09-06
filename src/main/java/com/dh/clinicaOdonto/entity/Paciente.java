@@ -23,7 +23,11 @@ import java.util.Date;
 
         private String nome;
         private String sobrenome;
-       // private Endereco endereco;
+
+        @OneToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "endereco")
+
+        private Endereco endereco;
         private String rg;
         private Date dataCadastro;
 }
