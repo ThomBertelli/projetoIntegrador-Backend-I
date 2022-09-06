@@ -1,8 +1,8 @@
 package com.dh.clinicaOdonto.service;
 
-import com.dh.clinicaOdonto.repository.IDao;
 import com.dh.clinicaOdonto.entity.Dentista;
 import com.dh.clinicaOdonto.dto.DentistaDTO;
+import com.dh.clinicaOdonto.repository.DentistaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.sql.SQLException;
@@ -14,14 +14,14 @@ import java.util.Optional;
 public class DentistaService {
 
     @Autowired
-    IDao<Dentista> dentistaIDaoH2;
+    DentistaRepository repository;
 
-    public Dentista salvar(Dentista dentista) throws SQLException {
-        return dentistaIDaoH2.salvar(dentista);
+    public Dentista salvar(Dentista dentista) {
+        return repository.save(dentista);
     }
 
-    public List<DentistaDTO> buscarTodos() throws SQLException {
-        List<Dentista> listDentista = dentistaIDaoH2.buscarTodos();
+    public List<DentistaDTO> buscarTodos() {
+        List<Dentista> listDentista = repository.findAll();
         List<DentistaDTO> listDentistaDTO = new ArrayList<>();
 
         for (Dentista d : listDentista){
@@ -30,15 +30,15 @@ public class DentistaService {
         return listDentistaDTO;
     }
 
-    public void alterar(Dentista dentista) throws SQLException {
-        dentistaIDaoH2.alterar(dentista);
+    public void alterar(Dentista dentista)  {
+        repository.save(dentista);
     }
 
-    public void excluir(int id) throws SQLException {
-        dentistaIDaoH2.excluir(id);
+    public void excluir(Long id) {
+        repository.deleteById(id);
     }
 
-    public Optional<Dentista> buscaPorId(int id) throws SQLException {
-        return dentistaIDaoH2.buscarPorId(id);
+    public Optional<Dentista> buscaPorId(Long id){
+        return repository.findById(id);
     }
 }

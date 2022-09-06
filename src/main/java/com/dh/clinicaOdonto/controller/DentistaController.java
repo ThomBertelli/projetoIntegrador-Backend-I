@@ -5,6 +5,8 @@ import com.dh.clinicaOdonto.dto.DentistaDTO;
 import com.dh.clinicaOdonto.service.DentistaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.sql.SQLException;
 import java.util.List;
@@ -17,7 +19,7 @@ public class DentistaController {
     DentistaService service;
 
     @PostMapping
-    public Dentista salvaDentista(@RequestBody Dentista dentista) throws SQLException {
+    public Dentista salvaDentista(@RequestBody Dentista dentista)  {
         return service.salvar(dentista);
     }
 
@@ -26,26 +28,26 @@ public class DentistaController {
         return service.buscarTodos();
     }
     @RequestMapping(value = "/buscaId", method = RequestMethod.GET)
-    public DentistaDTO buscarPorId(@RequestParam("id") int id) throws SQLException {
+    public ResponseEntity buscarPorId(@RequestParam("id") Long id)  {
         ObjectMapper mapper = new ObjectMapper();
-        Optional<Dentista> produtoOptional = service.buscaPorId(id);
-        if(produtoOptional.isEmpty()){
-            return new DentistaDTO();
+        Optional<Dentista> dentistaOptional = service.buscaPorId(id);
+        if(dentistaOptional.isEmpty()){
+            return new ResponseEntity("Dentista não foi encontrado", HttpStatus.NOT_FOUND);
         }
-        Dentista dentista =  produtoOptional.get();
+        Dentista dentista =  dentistaOptional.get();
         DentistaDTO dentistaDTO = mapper.convertValue(dentista, DentistaDTO.class);
 
-        return dentistaDTO;
+        return new ResponseEntity(dentistaDTO, HttpStatus.OK);
 
     }
 
     @PatchMapping
-    public void alterar(@RequestBody Dentista dentista) throws SQLException {
+    public void alterar(@RequestBody Dentista dentista) {
         service.alterar(dentista);
     }
 
     @DeleteMapping
-    public void excluir(@RequestParam("id") int id) throws SQLException {
+    public void excluir(@RequestParam("id") Long id) {
         service.excluir(id);
     }
 }

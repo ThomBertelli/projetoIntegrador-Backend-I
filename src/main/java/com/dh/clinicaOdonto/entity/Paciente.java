@@ -5,18 +5,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.Date;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name = "paciente")
 
     public class Paciente {
-        private int id;
+
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long id;
+
         private String nome;
         private String sobrenome;
-        private Endereco endereco;
+       // private Endereco endereco;
         private String rg;
         private Date dataCadastro;
 }

@@ -15,15 +15,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 
 public class DentistaDTO {
-    private String nome;
-    private String sobrenome;
+//    private String nome;
+//    private String sobrenome;
 
     private String nomeCompleto;
 
     public DentistaDTO(Dentista dentista){
-        this.nome = dentista.getNome();
-        this.sobrenome = dentista.getSobrenome();
-        this.nomeCompleto = nome + " " + sobrenome;
+//        this.nome = dentista.getNome();
+//        this.sobrenome = dentista.getSobrenome();
+        this.nomeCompleto = dentista.getNome() + " " + dentista.getSobrenome();
     }
 
 }
