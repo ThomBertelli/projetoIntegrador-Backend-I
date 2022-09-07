@@ -15,7 +15,6 @@ import lombok.Setter;
 @JsonIgnoreProperties(ignoreUnknown = true)
 
 public class EnderecoDTO {
-
     private String rua;
     private String numero;
 

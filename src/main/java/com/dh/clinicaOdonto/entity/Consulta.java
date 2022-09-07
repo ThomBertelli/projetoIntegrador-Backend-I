@@ -15,7 +15,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "consulta")
+@Table(name = "consultas")
 
     public class Consulta {
 
@@ -24,10 +24,13 @@ import java.util.Date;
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_dentista" , referencedColumnName = "id")
     private Dentista dentista;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_paciente" , referencedColumnName = "id")
     private Paciente paciente;
+
     private Date data_consulta;
 
 

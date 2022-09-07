@@ -13,7 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "paciente")
+@Table(name = "pacientes")
 
     public class Paciente {
 
@@ -24,10 +24,10 @@ import java.util.Date;
         private String nome;
         private String sobrenome;
 
-        @OneToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "id_endereco")
-
+        @OneToOne(cascade = CascadeType.ALL)
+        @JoinColumn(name = "id_endereco" , referencedColumnName = "id")
         private Endereco endereco;
+
         private String rg;
         private Date dataCadastro;
 }

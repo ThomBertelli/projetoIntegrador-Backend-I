@@ -12,13 +12,15 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "dentista")
+@Table(name = "dentistas")
 
     public class Dentista {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
         private Long id;
+
         private String nome;
         private String sobrenome;
         private int matricula;

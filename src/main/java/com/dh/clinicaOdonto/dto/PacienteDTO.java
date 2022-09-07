@@ -1,6 +1,7 @@
 package com.dh.clinicaOdonto.dto;
 
 import com.dh.clinicaOdonto.entity.Dentista;
+import com.dh.clinicaOdonto.entity.Endereco;
 import com.dh.clinicaOdonto.entity.Paciente;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +23,6 @@ import java.util.Date;
 
 public class PacienteDTO {
     private String nomeCompleto;
-
 
     public PacienteDTO(Paciente paciente){
 
