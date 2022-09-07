@@ -25,4 +25,7 @@ import javax.persistence.*;
         private String numero;
         private String cidade;
         private String estado;
+
+//        @OneToOne (mappedBy = "endereco")
+//        private Paciente paciente;
 }

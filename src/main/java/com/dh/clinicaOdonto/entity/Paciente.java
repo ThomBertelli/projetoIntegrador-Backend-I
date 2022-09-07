@@ -23,11 +23,12 @@ import java.util.Date;
 
         private String nome;
         private String sobrenome;
+        private String rg;
+        private Date dataCadastro;
 
         @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "id_endereco" , referencedColumnName = "id")
         private Endereco endereco;
 
-        private String rg;
-        private Date dataCadastro;
+
 }
