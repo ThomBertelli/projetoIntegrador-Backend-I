@@ -13,12 +13,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "endereco")
+
     public class Endereco {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
-
 
         private String rua;
         private String numero;

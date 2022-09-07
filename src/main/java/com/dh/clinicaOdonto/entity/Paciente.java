@@ -25,7 +25,7 @@ import java.util.Date;
         private String sobrenome;
 
         @OneToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "endereco")
+        @JoinColumn(name = "id_endereco")
 
         private Endereco endereco;
         private String rg;
