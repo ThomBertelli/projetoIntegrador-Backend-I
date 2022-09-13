@@ -7,6 +7,11 @@ import com.dh.clinicaOdonto.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +23,9 @@ public class PacienteService {
     PacienteRepository repository;
 
     public Paciente salvar (Paciente paciente) {
+        paciente.setDataCadastro(Timestamp.valueOf(LocalDateTime.now()));
         return  repository.save(paciente);
+
     }
 
     public List<PacienteDTO> buscarTodos(){

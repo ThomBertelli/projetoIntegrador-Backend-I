@@ -1,12 +1,14 @@
 package com.dh.clinicaOdonto.entity;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -24,9 +26,9 @@ import java.util.Date;
         private String nome;
         private String sobrenome;
         private String rg;
-        private Date dataCadastro;
+        private Timestamp dataCadastro;
 
-        @OneToOne(cascade = CascadeType.ALL)
+        @OneToOne
         @JoinColumn(name = "id_endereco" , referencedColumnName = "id")
         private Endereco endereco;
 

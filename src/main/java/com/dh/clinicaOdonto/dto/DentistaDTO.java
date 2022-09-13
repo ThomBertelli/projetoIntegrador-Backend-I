@@ -25,5 +25,4 @@ public class DentistaDTO {
 //        this.sobrenome = dentista.getSobrenome();
         this.nomeCompleto = dentista.getNome() + " " + dentista.getSobrenome();
     }
-
 }

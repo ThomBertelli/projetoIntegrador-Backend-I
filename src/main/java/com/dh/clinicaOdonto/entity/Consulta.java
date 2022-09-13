@@ -7,8 +7,10 @@ import lombok.Setter;
 import org.springframework.context.ApplicationContext;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.TimeZone;
 
 @Getter
 @Setter
@@ -23,15 +25,15 @@ import java.util.Date;
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "id_dentista" , referencedColumnName = "id")
     private Dentista dentista;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "id_paciente" , referencedColumnName = "id")
     private Paciente paciente;
 
-    private Date data_consulta;
+    private Timestamp dataHoraAgendamento;
 
 
 }

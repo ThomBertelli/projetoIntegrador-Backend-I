@@ -6,6 +6,7 @@ import com.dh.clinicaOdonto.entity.Dentista;
 import com.dh.clinicaOdonto.dto.DentistaDTO;
 import com.dh.clinicaOdonto.repository.ConsultaRepository;
 import com.dh.clinicaOdonto.repository.DentistaRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.sql.SQLException;
@@ -26,11 +27,22 @@ public class ConsultaService {
     public List<ConsultaDTO> buscarTodos() {
         List<Consulta> listConsulta = repository.findAll();
         List<ConsultaDTO> listConsultaDTO = new ArrayList<>();
+        ObjectMapper mapper = new ObjectMapper();
 
         for (Consulta c : listConsulta){
-            listConsultaDTO.add(new ConsultaDTO(c));
+            listConsultaDTO.add(mapper.convertValue(c, ConsultaDTO.class));
         }
         return listConsultaDTO;
+    }
+
+    public List<Consulta> buscarPorRg(String rg){
+
+        return repository.findByPacienteRg(rg);
+    }
+
+    public List<Consulta> buscarPorMatricula(int matricula){
+
+        return repository.findByDentistaMatricula(matricula);
     }
 
     public void alterar(Consulta consulta)  {

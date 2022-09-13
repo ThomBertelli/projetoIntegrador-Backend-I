@@ -9,10 +9,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.Date;
+
+import java.sql.Timestamp;
+import java.time.*;
 
 @Getter
 @Setter
@@ -22,11 +21,24 @@ import java.util.Date;
 @JsonIgnoreProperties(ignoreUnknown = true)
 
 public class ConsultaDTO {
-    private String infosConsulta;
+    public String infosConsulta;
+    private LocalDateTime dataHoraAgendamento;
+//    private LocalTime horaAgendamento;
+//    private LocalDate dataAgendamento;
 
-    public ConsultaDTO (Consulta consulta){
-        infosConsulta = consulta.getPaciente().getNome()+", sua consulta está marcada para " + consulta.getData_consulta() + "com o dentista " +consulta.getDentista().getNome();
-    }
+    private Dentista dentista;
 
+    private Paciente paciente;
 
+//    public ConsultaDTO (Consulta consulta){
+//        infosConsulta = consulta.getPaciente().getNome()+", sua consulta está marcada para " + dataHoraAgendamento + " com o(a) dentista " + consulta.getDentista().getNome();
+//    }
+
+   public void setDataHoraAgendamento(Timestamp dataHoraAgendamento){
+        this.dataHoraAgendamento = Instant.ofEpochMilli(dataHoraAgendamento.getTime()).atZone(ZoneId.of("UTC-03")).toLocalDateTime();
+       //        this.dataAgendamento = this.dataHoraAgendamento.toLocalDate();
+       //        this.horaAgendamento = this.dataHoraAgendamento.toLocalTime();
+       infosConsulta = paciente.getNome() + ", sua consulta está marcada para " + dataHoraAgendamento + " com o(a) dentista " + dentista.getNome();
+
+   }
 }

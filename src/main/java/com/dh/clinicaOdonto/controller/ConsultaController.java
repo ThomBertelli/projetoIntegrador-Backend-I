@@ -4,6 +4,7 @@ import com.dh.clinicaOdonto.dto.ConsultaDTO;
 import com.dh.clinicaOdonto.entity.Consulta;
 import com.dh.clinicaOdonto.entity.Dentista;
 import com.dh.clinicaOdonto.dto.DentistaDTO;
+import com.dh.clinicaOdonto.entity.Paciente;
 import com.dh.clinicaOdonto.service.ConsultaService;
 import com.dh.clinicaOdonto.service.DentistaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,13 +25,18 @@ public class ConsultaController {
     ConsultaService service;
 
     @PostMapping
-    public Consulta salvarConsulta (@RequestBody Consulta consulta){
-        return service.salvar(consulta);
+    public ResponseEntity salvar(@RequestBody Consulta consulta){
+        Consulta consultaSalva = service.salvar(consulta);
+        return new ResponseEntity(consultaSalva,HttpStatus.OK);
     }
 
     @GetMapping
-    public  List<ConsultaDTO> buscarTodos () throws SQLException{
-        return service.buscarTodos();
+    public ResponseEntity buscarTodos(){
+        List<ConsultaDTO> consultaList = service.buscarTodos();
+        if(consultaList.isEmpty()){
+            return new ResponseEntity("Nenhuma consulta encontrada", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(consultaList, HttpStatus.OK);
     }
 
     @RequestMapping (value = "/buscarId", method = RequestMethod.GET)
@@ -44,6 +50,23 @@ public class ConsultaController {
         ConsultaDTO consultaDTO = mapper.convertValue(consulta, ConsultaDTO.class);
 
         return new ResponseEntity(consultaDTO, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/buscaPorPaciente")
+    public ResponseEntity buscaPorPaciente(@RequestParam("rg") String rg){
+        List<Consulta> listConsulta = service.buscarPorRg(rg);
+        if(listConsulta.isEmpty()){
+            return new ResponseEntity("Nenhuma consulta encontrada para o paciente: " + Paciente.class.getName(), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(listConsulta,HttpStatus.OK);
+    }
+    @GetMapping(path = "/buscaPorDentista")
+    public ResponseEntity buscaPorDentista(@RequestParam("matricula") int matricula){
+        List<Consulta> listConsulta = service.buscarPorMatricula(matricula);
+        if(listConsulta.isEmpty()){
+            return new ResponseEntity("Nenhuma consulta encontrada para o dentista: " + Dentista.class.getName(), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(listConsulta,HttpStatus.OK);
     }
 
     @PatchMapping
