@@ -27,16 +27,17 @@ public class ConsultaController {
     @PostMapping
     public ResponseEntity salvar(@RequestBody Consulta consulta){
         Consulta consultaSalva = service.salvar(consulta);
+        if(consultaSalva == null){
+            return new ResponseEntity("Erro ao salvar consulta",HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity(consultaSalva,HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity buscarTodos(){
-        List<ConsultaDTO> consultaList = service.buscarTodos();
-        if(consultaList.isEmpty()){
-            return new ResponseEntity("Nenhuma consulta encontrada", HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity(consultaList, HttpStatus.OK);
+        List<ConsultaDTO> listConsulta = service.buscarTodos();
+        if(listConsulta.isEmpty())return new ResponseEntity("Nenhuma consulta encontrada", HttpStatus.NOT_FOUND);
+        return new ResponseEntity(listConsulta, HttpStatus.OK);
     }
 
     @RequestMapping (value = "/buscarId", method = RequestMethod.GET)
