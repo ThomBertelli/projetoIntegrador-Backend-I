@@ -18,11 +18,14 @@ public class EnderecoDTO {
     private String rua;
     private String numero;
 
-//    private String enderecoCompleto;
+    private String cidade;
+
+    private String estado;
 
     public EnderecoDTO(Endereco endereco){
         this.rua = endereco.getRua();
         this.numero = endereco.getNumero();
-   //     this.enderecoCompleto = endereco.getRua() + ", " + endereco.getNumero();
+        this.cidade = endereco.getCidade();
+        this.estado = endereco.getEstado();
     }
 }

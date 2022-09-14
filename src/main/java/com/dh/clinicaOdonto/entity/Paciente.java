@@ -1,6 +1,7 @@
 package com.dh.clinicaOdonto.entity;
 
 
+import com.dh.clinicaOdonto.dto.EnderecoDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

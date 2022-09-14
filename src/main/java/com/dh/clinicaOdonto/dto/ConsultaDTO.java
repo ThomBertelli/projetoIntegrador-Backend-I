@@ -21,24 +21,13 @@ import java.time.*;
 @JsonIgnoreProperties(ignoreUnknown = true)
 
 public class ConsultaDTO {
-    public String infosConsulta;
     private LocalDateTime dataHoraAgendamento;
-//    private LocalTime horaAgendamento;
-//    private LocalDate dataAgendamento;
 
     private Dentista dentista;
 
     private Paciente paciente;
 
-//    public ConsultaDTO (Consulta consulta){
-//        infosConsulta = consulta.getPaciente().getNome()+", sua consulta está marcada para " + dataHoraAgendamento + " com o(a) dentista " + consulta.getDentista().getNome();
-//    }
-
    public void setDataHoraAgendamento(Timestamp dataHoraAgendamento){
         this.dataHoraAgendamento = Instant.ofEpochMilli(dataHoraAgendamento.getTime()).atZone(ZoneId.of("UTC-03")).toLocalDateTime();
-       //        this.dataAgendamento = this.dataHoraAgendamento.toLocalDate();
-       //        this.horaAgendamento = this.dataHoraAgendamento.toLocalTime();
-       infosConsulta = paciente.getNome() + ", sua consulta está marcada para " + dataHoraAgendamento + " com o(a) dentista " + dentista.getNome();
-
    }
 }
