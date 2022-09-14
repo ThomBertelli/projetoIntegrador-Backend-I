@@ -1,15 +1,10 @@
 package com.dh.clinicaOdonto.service;
-
 import com.dh.clinicaOdonto.dto.ConsultaDTO;
 import com.dh.clinicaOdonto.entity.Consulta;
-import com.dh.clinicaOdonto.entity.Dentista;
-import com.dh.clinicaOdonto.dto.DentistaDTO;
 import com.dh.clinicaOdonto.repository.ConsultaRepository;
-import com.dh.clinicaOdonto.repository.DentistaRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
