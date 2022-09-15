@@ -29,7 +29,7 @@ import java.time.LocalDate;
         private String rg;
         private Timestamp dataCadastro;
 
-        @OneToOne
+        @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "id_endereco" , referencedColumnName = "id")
         private Endereco endereco;
 

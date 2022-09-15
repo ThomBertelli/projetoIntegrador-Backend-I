@@ -40,8 +40,8 @@ public class ConsultaService {
         return repository.findByDentistaMatricula(matricula);
     }
 
-    public void alterar(Consulta consulta)  {
-        repository.save(consulta);
+    public Consulta alterar(Consulta consulta)  {
+        return repository.save(consulta);
     }
 
     public void excluir(Long id) {

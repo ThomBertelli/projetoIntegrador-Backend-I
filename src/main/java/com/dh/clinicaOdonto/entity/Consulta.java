@@ -23,11 +23,11 @@ import java.sql.Timestamp;
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_dentista" , referencedColumnName = "id")
     private Dentista dentista;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_paciente" , referencedColumnName = "id")
     private Paciente paciente;
 
