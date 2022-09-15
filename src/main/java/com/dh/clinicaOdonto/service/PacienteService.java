@@ -3,7 +3,9 @@ package com.dh.clinicaOdonto.service;
 
 import com.dh.clinicaOdonto.dto.PacienteDTO;
 import com.dh.clinicaOdonto.entity.Paciente;
+import com.dh.clinicaOdonto.exception.ResourceNotFoundException;
 import com.dh.clinicaOdonto.repository.PacienteRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +46,19 @@ public class PacienteService {
 
     public void excluir(Long id){repository.deleteById(id);}
 
-    public Optional<Paciente> buscaPorId(Long id) {return repository.findById(id);}
+    public PacienteDTO buscaPorId(Long id) throws ResourceNotFoundException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        Optional<Paciente> produtoOptional = repository.findById(id);
+
+        PacienteDTO pacienteDTO = null;
+        try{
+            //Aqui fazemos a conversão de Paciente para PacienteDTO usando Jackson
+            Paciente paciente =  produtoOptional.get();
+            pacienteDTO = mapper.convertValue(paciente, PacienteDTO.class);
+        }catch (Exception ex){
+            throw new ResourceNotFoundException("Erro ao buscar produto, id do produto não existe");
+        }
+    }
 
 }

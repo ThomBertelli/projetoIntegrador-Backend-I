@@ -2,6 +2,7 @@ package com.dh.clinicaOdonto.controller;
 
 import com.dh.clinicaOdonto.dto.PacienteDTO;
 import com.dh.clinicaOdonto.entity.Paciente;
+import com.dh.clinicaOdonto.exception.ResourceNotFoundException;
 import com.dh.clinicaOdonto.service.PacienteService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,16 +27,8 @@ public class PacienteController {
     public List<PacienteDTO> buscarTodos(){ return service.buscarTodos();}
 
     @RequestMapping(value= "/buscaId", method = RequestMethod.GET)
-    public ResponseEntity buscaPorId(@RequestParam("id") Long id){
-        ObjectMapper mapper = new ObjectMapper();
-        Optional<Paciente> pacienteOptional = service.buscaPorId(id);
-        if(pacienteOptional.isEmpty()){
-            return new ResponseEntity( "Paciente não encontrado", HttpStatus.NOT_FOUND);
-        }
-        Paciente paciente = pacienteOptional.get();
-        PacienteDTO pacienteDTO = mapper.convertValue(paciente, PacienteDTO.class);
-
-        return new ResponseEntity(pacienteDTO, HttpStatus.OK);
+    public ResponseEntity buscaPorId(@RequestParam("id") Long id) throws ResourceNotFoundException {
+        return new ResponseEntity(service.buscaPorId(id), HttpStatus.OK);
     }
 
     @PatchMapping
