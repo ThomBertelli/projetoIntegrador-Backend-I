@@ -33,6 +33,7 @@ public class PacienteController {
     public void alterar(@RequestBody Paciente paciente){ service.alterar(paciente);}
 
     @DeleteMapping
-    public void excluir(@RequestParam("id") Long id){service.excluir(id);}
-
+    public void excluir(@RequestParam("id") Long id) throws ResourceNotFoundException {
+        service.excluir(id);
+    }
 }

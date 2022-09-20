@@ -9,11 +9,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -44,7 +41,10 @@ public class PacienteService {
 
     public void alterar(Paciente paciente){repository.save(paciente);}
 
-    public void excluir(Long id){repository.deleteById(id);}
+    public void excluir(Long id) throws ResourceNotFoundException {
+        repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Erro ao excluir paciente, id informado não existe"));
+        repository.deleteById(id);
+    }
 
     public PacienteDTO buscaPorId(Long id) throws ResourceNotFoundException {
         ObjectMapper mapper = new ObjectMapper();
@@ -57,9 +57,8 @@ public class PacienteService {
             Paciente paciente =  produtoOptional.get();
             pacienteDTO = mapper.convertValue(paciente, PacienteDTO.class);
         }catch (Exception ex){
-            throw new ResourceNotFoundException("Erro ao buscar produto, id do produto não existe");
+            throw new ResourceNotFoundException("Erro ao buscar paciente, id do paciente não existe");
         }
         return pacienteDTO;
     }
-
 }

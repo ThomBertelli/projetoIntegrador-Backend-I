@@ -1,15 +1,15 @@
 package com.dh.clinicaOdonto.controller;
 
-import com.dh.clinicaOdonto.entity.Endereco;
 import com.dh.clinicaOdonto.dto.EnderecoDTO;
+import com.dh.clinicaOdonto.entity.Endereco;
+import com.dh.clinicaOdonto.exception.ResourceNotFoundException;
 import com.dh.clinicaOdonto.service.EnderecoService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/endereco")
@@ -29,18 +29,8 @@ public class EnderecoController {
     }
 
     @RequestMapping(value = "/buscaId", method = RequestMethod.GET)
-    public ResponseEntity buscarPorId(@RequestParam("id") Long id)  {
-        ObjectMapper mapper = new ObjectMapper();
-        Optional<Endereco> enderecoOptional = service.buscaPorId(id);
-        if(enderecoOptional.isEmpty()){
-            return new ResponseEntity("Endereço não foi encontrado", HttpStatus.NOT_FOUND);
-        }
-        Endereco endereco =  enderecoOptional.get();
-         EnderecoDTO enderecoDTO = mapper.convertValue(endereco, EnderecoDTO.class);
-
-
-        return new ResponseEntity(enderecoDTO, HttpStatus.OK);
-
+    public ResponseEntity buscarPorId(@RequestParam("id") Long id) throws ResourceNotFoundException {
+        return new ResponseEntity(service.buscaPorId(id), HttpStatus.OK);
     }
 
     @PatchMapping
@@ -49,7 +39,7 @@ public class EnderecoController {
     }
 
     @DeleteMapping
-    public void excluir(@RequestParam("id") Long id)  {
+    public void excluir(@RequestParam("id") Long id) throws ResourceNotFoundException {
         service.excluir(id);
     }
 
