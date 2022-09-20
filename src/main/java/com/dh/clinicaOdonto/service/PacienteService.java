@@ -9,11 +9,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -59,6 +56,7 @@ public class PacienteService {
         }catch (Exception ex){
             throw new ResourceNotFoundException("Erro ao buscar produto, id do produto não existe");
         }
+        return pacienteDTO;
     }
 
 }
