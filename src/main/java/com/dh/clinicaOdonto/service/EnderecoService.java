@@ -38,7 +38,7 @@ public class EnderecoService {
 
     public void excluir(Long id) throws ResourceNotFoundException {
 
-        repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Erro ao excluir produto, id informado não existe"));
+        repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Erro ao excluir endereço, id informado não existe"));
         repository.deleteById(id);
     }
 
