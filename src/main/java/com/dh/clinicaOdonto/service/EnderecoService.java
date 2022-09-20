@@ -2,10 +2,12 @@ package com.dh.clinicaOdonto.service;
 
 import com.dh.clinicaOdonto.dto.EnderecoDTO;
 import com.dh.clinicaOdonto.entity.Endereco;
+import com.dh.clinicaOdonto.exception.ResourceNotFoundException;
 import com.dh.clinicaOdonto.repository.EnderecoRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -34,12 +36,26 @@ public class EnderecoService {
         repository.save(endereco);
     }
 
-    public void excluir(Long id) {
-       repository.deleteById(id);
+    public void excluir(Long id) throws ResourceNotFoundException {
+
+        repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Erro ao excluir produto, id informado não existe"));
+        repository.deleteById(id);
     }
 
-    public Optional<Endereco> buscaPorId(Long id){
-        return repository.findById(id);
+    public EnderecoDTO buscaPorId(Long id)throws ResourceNotFoundException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        Optional<Endereco> enderecoOptional = repository.findById(id);
+
+        EnderecoDTO enderecoDTO = null;
+        try{
+            Endereco endereco =  enderecoOptional.get();
+            enderecoDTO = mapper.convertValue(endereco, EnderecoDTO.class);
+        }catch (Exception ex){
+            throw new ResourceNotFoundException("Erro ao buscar endereço, id do endereço não existe");
+        }
+
+        return enderecoDTO;
     }
     
 }
