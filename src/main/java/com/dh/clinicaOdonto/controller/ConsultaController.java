@@ -3,16 +3,13 @@ package com.dh.clinicaOdonto.controller;
 import com.dh.clinicaOdonto.dto.ConsultaDTO;
 import com.dh.clinicaOdonto.entity.Consulta;
 import com.dh.clinicaOdonto.entity.Dentista;
-import com.dh.clinicaOdonto.dto.DentistaDTO;
 import com.dh.clinicaOdonto.entity.Paciente;
 import com.dh.clinicaOdonto.service.ConsultaService;
-import com.dh.clinicaOdonto.service.DentistaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 

@@ -59,6 +59,7 @@ public class PacienteService {
         }catch (Exception ex){
             throw new ResourceNotFoundException("Erro ao buscar produto, id do produto não existe");
         }
+        return pacienteDTO;
     }
 
 }
