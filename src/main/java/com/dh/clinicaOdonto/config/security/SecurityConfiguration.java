@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -19,6 +20,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     AutenticacaoService autenticacaoService;
+    @Autowired
+    AutenticacaoViaTokenFilter autenticacaoViaTokenFilter;
+
 
     @Override
     @Bean
@@ -30,11 +34,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.GET,"/dentista","/paciente").hasAnyAuthority("ADMIN")
+//                .antMatchers(HttpMethod.GET,"/dentista","/paciente").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET,"/dentista","/paciente").permitAll()
                 .antMatchers(HttpMethod.POST,"/auth").permitAll()
-                .antMatchers(HttpMethod.GET,"/consulta").hasAuthority("USER")
+//                .antMatchers(HttpMethod.GET,"/consulta").hasAuthority("USER")
+                .antMatchers(HttpMethod.GET,"/consulta").permitAll()
                 .anyRequest().authenticated()
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().addFilterAfter(autenticacaoViaTokenFilter,UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override

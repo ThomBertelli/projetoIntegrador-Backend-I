@@ -1,6 +1,7 @@
 package com.dh.clinicaOdonto.config.security;
 
 import com.dh.clinicaOdonto.entity.Usuario;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,5 +35,21 @@ public class TokenService {
                 .compact();
 
         return token;
+    }
+
+    public boolean verificaToken(String token) {
+        try {
+            Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token);
+            return true;
+        }catch (Exception exception){
+        return false;
+        }
+    }
+
+    public String getUsernameUsuario(String token) {
+        Claims clains = Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody();
+        String username = clains.getSubject();
+
+        return username;
     }
 }
