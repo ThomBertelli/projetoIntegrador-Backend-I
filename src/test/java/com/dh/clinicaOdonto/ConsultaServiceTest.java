@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -20,10 +19,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 
-@Transactional
+//@Transactional
 class ConsultaServiceTest {
 
     Logger logger  = Logger.getLogger(ConsultaServiceTest.class);
@@ -52,19 +50,26 @@ class ConsultaServiceTest {
         dentista.setNome("Carlos");
         dentista.setSobrenome("Correa");
 
+        Timestamp dataCadastro = Timestamp.valueOf(LocalDateTime.of(LocalDate.of(2022, 9, 21), LocalTime.of(14, 30, 0)));
+
         paciente = new Paciente();
         paciente.setNome("José");
         paciente.setSobrenome("Santos");
         paciente.setEndereco(endereco);
         paciente.setRg("555");
+        paciente.setDataCadastro(dataCadastro);
+
 
         Timestamp data = Timestamp.valueOf(LocalDateTime.of(LocalDate.of(2022, 12, 7), LocalTime.of(8, 45, 0)));
+
 
 
         consulta = new Consulta();
         consulta.setDentista(dentista);
         consulta.setPaciente(paciente);
         consulta.setDataHoraAgendamento(data);
+
+
 
     }
 
@@ -81,11 +86,24 @@ class ConsultaServiceTest {
     @Test
     void alterando(){
         logger.info("Iniciando teste alterar consulta.");
-        List<Consulta> consultas = service.buscarPorRg("555");
-        consultas.get(0).getPaciente().setRg("99999");
-        Consulta consultaAlterada = service.alterar(consultas.get(0));
-        Assertions.assertEquals("99999",consultaAlterada.getPaciente().getRg());
+        service.buscarPorRg("555");
+        paciente.setRg("99999");
+        Assertions.assertEquals("99999",paciente.getRg());
         logger.info("Teste alterar consulta finalizado.");
     }
+
+    @Test
+    void consultando() {
+        logger.info("Iniciando teste alterar consulta.");
+        Timestamp dataAlterada = Timestamp.valueOf(LocalDateTime.of(LocalDate.of(2022, 10, 12), LocalTime.of(16, 00, 0)));
+        Object Consulta;
+        Consulta = consulta;
+        Consulta = service.buscaPorId(1L);
+//        Consulta = consulta.getDataHoraAgendamento();
+        consulta.setDataHoraAgendamento(dataAlterada);
+        Assertions.assertEquals(dataAlterada, consulta.getDataHoraAgendamento());
+        logger.info("Teste alterar consulta finalizado.");
+    }
+
 
 }
