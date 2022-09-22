@@ -4,6 +4,7 @@ import com.dh.clinicaOdonto.dto.ConsultaDTO;
 import com.dh.clinicaOdonto.entity.Consulta;
 import com.dh.clinicaOdonto.entity.Dentista;
 import com.dh.clinicaOdonto.entity.Paciente;
+import com.dh.clinicaOdonto.exception.ResourceNotFoundException;
 import com.dh.clinicaOdonto.service.ConsultaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,17 +38,9 @@ public class ConsultaController {
         return new ResponseEntity(listConsulta, HttpStatus.OK);
     }
 
-    @RequestMapping (value = "/buscarId", method = RequestMethod.GET)
-    public ResponseEntity buscarPorId(@RequestParam("id") Long id){
-        ObjectMapper mapper = new ObjectMapper();
-        Optional<Consulta> consultaOptional = service.buscaPorId(id);
-        if(consultaOptional.isEmpty()){
-           return new ResponseEntity ("Consulta não foi encontrada", HttpStatus.NOT_FOUND);
-        }
-        Consulta consulta = consultaOptional.get();
-        ConsultaDTO consultaDTO = mapper.convertValue(consulta, ConsultaDTO.class);
-
-        return new ResponseEntity(consultaDTO, HttpStatus.OK);
+    @RequestMapping(value = "/buscaId", method = RequestMethod.GET)
+    public ResponseEntity buscarPorId(@RequestParam("id") Long id) throws ResourceNotFoundException {
+        return new ResponseEntity(service.buscaPorId(id), HttpStatus.OK);
     }
 
     @GetMapping(path = "/buscaPorPaciente")
@@ -73,7 +66,7 @@ public class ConsultaController {
     }
 
     @DeleteMapping
-    public void excluir (@RequestParam("id") Long id) {
+       public void excluir(@RequestParam("id") Long id) throws ResourceNotFoundException {
         service.excluir(id);
     }
 
