@@ -62,7 +62,7 @@ public class ConsultaService {
             Consulta consulta =  consultaOptional.get();
             consultaDTO = mapper.convertValue(consulta, ConsultaDTO.class);
         }catch (Exception ex){
-            throw new ResourceNotFoundException("Erro ao buscar consulta, id do consulta não existe");
+            throw new ResourceNotFoundException("Erro ao buscar consulta, id da consulta não existe");
         }
         return consultaDTO;
     }
