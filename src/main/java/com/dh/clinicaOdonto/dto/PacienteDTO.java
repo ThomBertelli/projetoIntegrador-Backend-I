@@ -25,7 +25,6 @@ public class PacienteDTO {
    private Endereco endereco;
 
     public PacienteDTO(Paciente paciente){
-
         this.nomeCompleto = paciente.getNome() + " " + paciente.getSobrenome();
         this.rg = paciente.getRg();
         this.dataCadastro = paciente.getDataCadastro();

@@ -74,12 +74,13 @@ public class PacienteServiceTest {
 
     @Test
     void buscarTodos() {
-        logger.info("Iniciando teste salvar paciente");
+        logger.info("Iniciando teste buscar todos");
         Paciente buscarPacientes = new Paciente();
         buscarPacientes = pacienteService.salvar(pacienteTest);
 
         List<PacienteDTO> resultado = pacienteService.buscarTodos();
         Assertions.assertFalse(resultado.size()>1);
+        logger.info("Teste buscar todos finalizado");
     }
 
     @Test
@@ -104,11 +105,11 @@ public class PacienteServiceTest {
         logger.info("Teste de exclusão de paciente finalizado.");
     }
 
-    // @Test
-    // void buscaPorId() throws ResourceNotFoundException {
-    //   pacienteTest = pacienteService.salvar(pacienteTest);
-    //      PacienteDTO pacienteDTO = pacienteService.buscaPorId(2L);
-    //    Assertions.assertEquals(2L,pacienteService);
+     @Test
+     void buscaPorId() throws ResourceNotFoundException {
+       pacienteTest = pacienteService.salvar(pacienteTest);
+          PacienteDTO pacienteDTO = pacienteService.buscaPorId(1L);
+        Assertions.assertEquals(1L, pacienteTest.getId());
 
-    // }
+     }
 }
