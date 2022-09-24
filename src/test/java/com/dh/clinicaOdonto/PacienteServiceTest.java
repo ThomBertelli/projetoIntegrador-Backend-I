@@ -107,9 +107,11 @@ public class PacienteServiceTest {
 
      @Test
      void buscaPorId() throws ResourceNotFoundException {
+         logger.info("Iniciando teste busca por id consulta.");
        pacienteTest = pacienteService.salvar(pacienteTest);
           PacienteDTO pacienteDTO = pacienteService.buscaPorId(1L);
         Assertions.assertEquals(1L, pacienteTest.getId());
+         logger.info("Teste busca por id consulta finalizado.");
 
      }
 }

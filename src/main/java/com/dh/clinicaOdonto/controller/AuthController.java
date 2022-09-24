@@ -3,6 +3,7 @@ package com.dh.clinicaOdonto.controller;
 import com.dh.clinicaOdonto.config.security.TokenService;
 import com.dh.clinicaOdonto.dto.TokenDTO;
 import com.dh.clinicaOdonto.dto.UsuarioDTO;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,8 @@ import javax.validation.Valid;
 @RequestMapping ("/auth")
 public class AuthController {
 
+    Logger logger  = Logger.getLogger(TokenService.class);
+
     @Autowired
     private AuthenticationManager authManager;
 
@@ -31,6 +34,7 @@ public class AuthController {
         public ResponseEntity autenticar (@RequestBody @Valid UsuarioDTO usuarioDTO) {
 
         try {
+            logger.info("Login autenticado");
             UsernamePasswordAuthenticationToken loginUsuario = usuarioDTO.converter();
 
             Authentication authentication = authManager.authenticate(loginUsuario);
@@ -43,6 +47,7 @@ public class AuthController {
 
             return new ResponseEntity(tokenDTO, HttpStatus.OK);
         } catch (AuthenticationException exception) {
+            logger.info("Falha ao autenticar o login");
             return new ResponseEntity("Erro ao autenticar", HttpStatus.BAD_REQUEST);
         }
     }

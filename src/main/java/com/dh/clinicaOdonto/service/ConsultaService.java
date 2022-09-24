@@ -1,4 +1,5 @@
 package com.dh.clinicaOdonto.service;
+import com.dh.clinicaOdonto.config.security.TokenService;
 import com.dh.clinicaOdonto.dto.ConsultaDTO;
 import com.dh.clinicaOdonto.dto.DentistaDTO;
 import com.dh.clinicaOdonto.entity.Consulta;
@@ -6,6 +7,7 @@ import com.dh.clinicaOdonto.entity.Dentista;
 import com.dh.clinicaOdonto.exception.ResourceNotFoundException;
 import com.dh.clinicaOdonto.repository.ConsultaRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import java.util.Optional;
 @Service
 public class ConsultaService {
 
+    Logger logger  = Logger.getLogger(TokenService.class);
     @Autowired
     ConsultaRepository repository;
 
@@ -59,9 +62,13 @@ public class ConsultaService {
 
         ConsultaDTO consultaDTO = null;
         try{
+            logger.info("Consulta encontrada");
+
             Consulta consulta =  consultaOptional.get();
             consultaDTO = mapper.convertValue(consulta, ConsultaDTO.class);
         }catch (Exception ex){
+            logger.info("Consulta não encontrada");
+
             throw new ResourceNotFoundException("Erro ao buscar consulta, id da consulta não existe");
         }
         return consultaDTO;

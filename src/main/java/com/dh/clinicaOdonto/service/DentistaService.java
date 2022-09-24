@@ -1,10 +1,12 @@
 package com.dh.clinicaOdonto.service;
 
+import com.dh.clinicaOdonto.config.security.TokenService;
 import com.dh.clinicaOdonto.dto.DentistaDTO;
 import com.dh.clinicaOdonto.entity.Dentista;
 import com.dh.clinicaOdonto.exception.ResourceNotFoundException;
 import com.dh.clinicaOdonto.repository.DentistaRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ import java.util.Optional;
 
 @Service
 public class DentistaService {
+
+    Logger logger  = Logger.getLogger(TokenService.class);
 
     @Autowired
     DentistaRepository repository;
@@ -48,10 +52,14 @@ public class DentistaService {
 
         DentistaDTO dentistaDTO = null;
         try{
+            logger.info("Dentista encontrado");
+
             //Aqui fazemos a conversão de Dentista para DentistaDTO usando Json
             Dentista dentista =  dentistaOptional.get();
             dentistaDTO = mapper.convertValue(dentista, DentistaDTO.class);
         }catch (Exception ex){
+            logger.info("Dentista não encontrado");
+
             //throw new ResourceNotFoundException("Erro ao buscar dentista, id do dentista não existe");
         }
         return dentistaDTO;

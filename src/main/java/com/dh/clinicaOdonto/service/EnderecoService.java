@@ -1,10 +1,12 @@
 package com.dh.clinicaOdonto.service;
 
+import com.dh.clinicaOdonto.config.security.TokenService;
 import com.dh.clinicaOdonto.dto.EnderecoDTO;
 import com.dh.clinicaOdonto.entity.Endereco;
 import com.dh.clinicaOdonto.exception.ResourceNotFoundException;
 import com.dh.clinicaOdonto.repository.EnderecoRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ import java.util.Optional;
 
 @Service
 public class EnderecoService {
+
+    Logger logger  = Logger.getLogger(TokenService.class);
 
     @Autowired
     EnderecoRepository repository;
@@ -49,9 +53,13 @@ public class EnderecoService {
 
         EnderecoDTO enderecoDTO = null;
         try{
+                        logger.info("Endereço encontrado");
+
             Endereco endereco =  enderecoOptional.get();
             enderecoDTO = mapper.convertValue(endereco, EnderecoDTO.class);
         }catch (Exception ex){
+            logger.info("Endereço não encontrado");
+
             throw new ResourceNotFoundException("Erro ao buscar endereço, id do endereço não existe");
         }
 

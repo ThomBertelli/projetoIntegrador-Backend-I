@@ -1,11 +1,13 @@
 package com.dh.clinicaOdonto.service;
 
 
+import com.dh.clinicaOdonto.config.security.TokenService;
 import com.dh.clinicaOdonto.dto.PacienteDTO;
 import com.dh.clinicaOdonto.entity.Paciente;
 import com.dh.clinicaOdonto.exception.ResourceNotFoundException;
 import com.dh.clinicaOdonto.repository.PacienteRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,8 @@ import java.util.Optional;
 
 @Service
 public class PacienteService {
+
+    Logger logger  = Logger.getLogger(TokenService.class);
 
     @Autowired
     PacienteRepository repository;
@@ -53,10 +57,13 @@ public class PacienteService {
 
         PacienteDTO pacienteDTO = null;
         try{
-            //Aqui fazemos a conversão de Paciente para PacienteDTO usando Jackson
+            logger.info("Paciente encontrado");
+
+            //Aqui fazemos a conversão de Paciente para PacienteDTO usando Jayson
             Paciente paciente =  produtoOptional.get();
             pacienteDTO = mapper.convertValue(paciente, PacienteDTO.class);
         }catch (Exception ex){
+            logger.info("Paciente não encontrado");
             throw new ResourceNotFoundException("Erro ao buscar paciente, id do paciente não existe");
         }
         return pacienteDTO;
