@@ -5,14 +5,16 @@ import com.dh.clinicaOdonto.entity.Consulta;
 import com.dh.clinicaOdonto.entity.Dentista;
 import com.dh.clinicaOdonto.entity.Paciente;
 import com.dh.clinicaOdonto.exception.ResourceNotFoundException;
+import com.dh.clinicaOdonto.exception.ValidationErrorException;
 import com.dh.clinicaOdonto.service.ConsultaService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/consulta")
@@ -23,12 +25,13 @@ public class ConsultaController {
     ConsultaService service;
 
     @PostMapping
-    public ResponseEntity salvar(@RequestBody Consulta consulta){
+    public ResponseEntity salvar(@RequestBody Consulta consulta) throws ValidationErrorException {
         Consulta consultaSalva = service.salvar(consulta);
         if(consultaSalva == null){
             return new ResponseEntity("Erro ao salvar consulta",HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity(consultaSalva,HttpStatus.OK);
+
     }
 
     @GetMapping

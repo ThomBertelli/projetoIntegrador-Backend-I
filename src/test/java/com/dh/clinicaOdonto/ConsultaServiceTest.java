@@ -6,6 +6,7 @@ import com.dh.clinicaOdonto.entity.Dentista;
 import com.dh.clinicaOdonto.entity.Endereco;
 import com.dh.clinicaOdonto.entity.Paciente;
 import com.dh.clinicaOdonto.exception.ResourceNotFoundException;
+import com.dh.clinicaOdonto.exception.ValidationErrorException;
 import com.dh.clinicaOdonto.service.ConsultaService;
 import org.apache.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
@@ -13,6 +14,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,7 +25,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-
+@Transactional
 class ConsultaServiceTest {
 
     Logger logger  = Logger.getLogger(ConsultaServiceTest.class);
@@ -71,7 +74,7 @@ class ConsultaServiceTest {
     }
 
     @Test
-    void salvar() {
+    void salvar() throws ValidationErrorException {
         logger.info("Iniciando teste salvar consulta.");
         Consulta consultaSalva = service.salvar(consulta);
         Assertions.assertNotNull(consultaSalva.getId());
@@ -79,7 +82,7 @@ class ConsultaServiceTest {
     }
 
     @Test
-    void alterar() throws ResourceNotFoundException {
+    void alterar() throws ResourceNotFoundException, ValidationErrorException {
         logger.info("Iniciando teste alterar consulta.");
         consulta = service.salvar(consulta);
         LocalDateTime dataAlt = LocalDateTime.of(2022,12,22,15,20,15,00);
@@ -91,16 +94,16 @@ class ConsultaServiceTest {
     }
 
     @Test
-    void buscaPorId() throws ResourceNotFoundException {
+    void buscaPorId() throws ResourceNotFoundException, ValidationErrorException {
         logger.info("Iniciando teste busca por id consulta.");
         consulta = service.salvar(consulta);
-        ConsultaDTO consultaDTO = service.buscaPorId(2L);
-        assertEquals(2L,consultaDTO.getPaciente().getId());
+        ConsultaDTO consultaDTO = service.buscaPorId(1L);
+        assertEquals(1L,consultaDTO.getPaciente().getId());
         logger.info("Teste busca por id consulta finalizado.");
     }
 
     @Test
-    void excluir() throws ResourceNotFoundException {
+    void excluir() throws ResourceNotFoundException, ValidationErrorException {
         logger.info("Iniciando teste excluir consulta.");
         consulta = service.salvar(consulta);
         service.excluir(consulta.getId());
@@ -112,7 +115,7 @@ class ConsultaServiceTest {
 
     }
     @Test
-    void buscarTodos(){
+    void buscarTodos() throws ValidationErrorException {
         logger.info("Iniciando teste buscar todos consulta.");
         consulta = service.salvar(consulta);
         List<ConsultaDTO> listaConsulta = service.buscarTodos();
@@ -122,7 +125,7 @@ class ConsultaServiceTest {
     }
 
     @Test
-    void buscarPorRg(){
+    void buscarPorRg() throws ValidationErrorException {
         logger.info("Iniciando teste buscar por rg consulta.");
         consulta = service.salvar(consulta);
         List <Consulta> consultasPorRg = service.buscarPorRg("555");
@@ -132,7 +135,7 @@ class ConsultaServiceTest {
     }
 
     @Test
-    void buscarPorMatricula(){
+    void buscarPorMatricula() throws ValidationErrorException {
         logger.info("Iniciando teste buscar por matricula consulta.");
         consulta = service.salvar(consulta);
         List<Consulta> consultasPorMatricula = service.buscarPorMatricula(5555);

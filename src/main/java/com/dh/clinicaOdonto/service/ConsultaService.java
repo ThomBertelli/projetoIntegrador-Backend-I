@@ -1,15 +1,16 @@
 package com.dh.clinicaOdonto.service;
 import com.dh.clinicaOdonto.config.security.TokenService;
 import com.dh.clinicaOdonto.dto.ConsultaDTO;
-import com.dh.clinicaOdonto.dto.DentistaDTO;
 import com.dh.clinicaOdonto.entity.Consulta;
-import com.dh.clinicaOdonto.entity.Dentista;
 import com.dh.clinicaOdonto.exception.ResourceNotFoundException;
+import com.dh.clinicaOdonto.exception.ValidationErrorException;
 import com.dh.clinicaOdonto.repository.ConsultaRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +22,23 @@ public class ConsultaService {
     @Autowired
     ConsultaRepository repository;
 
-    public Consulta salvar (Consulta consulta){
+    public Consulta salvar (Consulta consulta) throws ValidationErrorException {
+
+        int dentista = consulta.getDentista().getMatricula();
+        LocalDateTime dataConsulta = consulta.getDataHoraAgendamento().toLocalDateTime();
+
+        List<Consulta> listaConsutas = repository.findAll();
+
+        for(Consulta c : listaConsutas){
+
+            if (dentista == c.getDentista().getMatricula() && dataConsulta.isEqual(c.getDataHoraAgendamento().toLocalDateTime())  ) {
+
+                throw new ValidationErrorException("Horário indisponível para esse dentista");
+
+            }
+
+        }
+
         return repository.save(consulta);
     }
 
