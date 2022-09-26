@@ -36,8 +36,9 @@ public class DentistaService {
         return listDentistaDTO;
     }
 
-    public void alterar(Dentista dentista)  {
+    public Dentista alterar(Dentista dentista)  {
         repository.save(dentista);
+        return dentista;
     }
 
     public void excluir(Long id) throws ResourceNotFoundException {
