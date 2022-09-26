@@ -1,19 +1,17 @@
 package com.dh.clinicaOdonto;
 
-import com.dh.clinicaOdonto.dto.EnderecoDTO;
 import com.dh.clinicaOdonto.entity.Endereco;
 import com.dh.clinicaOdonto.exception.ResourceNotFoundException;
 import com.dh.clinicaOdonto.service.EnderecoService;
 import org.apache.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
-import java.util.Optional;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,22 +26,14 @@ public class EnderecoServiceTest {
 
     static Endereco endereco;
 
-    @BeforeEach
-    void doBeforeEach(){
+    @BeforeAll
+    static void doBefore() {
         endereco = new Endereco();
         endereco.setCidade("Taubaté");
         endereco.setEstado("SP");
         endereco.setNumero("160");
         endereco.setRua("Rua Claudino Velloso Borges");
     }
-//    @BeforeAll
-//    static void doBefore() {
-//        endereco = new Endereco();
-//        endereco.setCidade("Taubaté");
-//        endereco.setEstado("SP");
-//        endereco.setNumero("160");
-//        endereco.setRua("Rua Claudino Velloso Borges");
-//    }
 
     @Test
     void salvar() {
@@ -86,6 +76,12 @@ public class EnderecoServiceTest {
     }
 
     @Test
-    void buscaPorId() {
+    void buscaPorId() throws ResourceNotFoundException {
+        logger.info("Iniciando teste busca endereço por id.");
+        Endereco enderecoAlterado = new Endereco();
+        endereco = service.salvar(endereco);
+        service.buscaPorId(4L);
+        assertEquals(4L,endereco.getId());
+        logger.info("Teste busca endereço por id finalizado.");
     }
 }
