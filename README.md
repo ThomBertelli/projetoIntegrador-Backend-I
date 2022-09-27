@@ -42,7 +42,7 @@ desacoplar o acesso aos dados da visão.</li>
 <p> --- </p>
 <h3>Autores</h3>
 <p>Thomas Breno Bertelli</p>
-<p>Dario Oh</p>
+<p>Dario Olah</p>
 <p>Harry Möbbs Júnior</p>
 <p>Marina Fachinello</p>
 
